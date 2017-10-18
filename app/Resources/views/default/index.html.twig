@@ -3,25 +3,15 @@
 {% block body %}
     <h1>News list</h1>
 
-    <table>
-        <thead>
-        <tr>
-            <th>Id</th>
-            <th>Titre</th>
-            <th>Texte</th>
-            <th>Temps</th>
-            <th>Actions</th>
-        </tr>
-        </thead>
         <tbody>
         {% for n in thenews %}
-            <tr>
-                <td>{{ n.thetitle }}</td>
-            {#<td>{{ n.theText }}</td>
-                <td>{{ n.theDate|date('Y-m-d H:i:s') }}</td> #}
-            </tr>
+
+                <h3>{{ n.thetitle }}</h3>
+                <p>{{ n.theText }}</p>
+                <p>{{ n.theDate|date('Y-m-d H:i:s') }} par {{ n.fosUser.username }}</p>
+
         {% endfor %}
         </tbody>
-    </table>
+
 
 {% endblock %}
