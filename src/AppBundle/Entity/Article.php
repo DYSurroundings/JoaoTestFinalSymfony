@@ -139,7 +139,11 @@ class Article
 
         return $this;
     }
+    public function __toString()
+    {
+        return $this->thetext;
 
+    }
     /**
      * Get thedate
      *
@@ -186,16 +190,6 @@ class Article
         $this->section[] = $section;
 
         return $this;
-    }
-
-    /**
-     * Remove section
-     *
-     * @param \AppBundle\Entity\Section $section
-     */
-    public function removeSection(\AppBundle\Entity\Section $section)
-    {
-        $this->section->removeElement($section);
     }
 
     /**
