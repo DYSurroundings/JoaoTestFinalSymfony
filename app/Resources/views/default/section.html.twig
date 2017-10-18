@@ -1,18 +1,19 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+
+    <h1> {{ sectiontitle }} </h1>
+    
         <tbody>
     <table>
         <tr>
-            <th>Articles</th>
+            <th>Sections</th>
         </tr>
         <tr>
             {% for i in sections %}
-            <td><a href="{{ path("sections",{'id':i.id}) }}"> {{ i.thetitle }} </a> - </td>
+            <td><a href="{{ path("sections",{'id':i.id}) }}"> {{ i.thetitle }} </a> / </td>
             {% endfor %}
         </tr>
-
-        <h1>Articles</h1>
     </table>
     {% for n in thenews %}
 
@@ -21,7 +22,7 @@
                 <p>{{ n.theDate|date('Y-m-d H:i:s') }} par {{ n.fosUser.username }}</p>
 
         {% endfor %}
-         
+        
         </tbody>
 
 

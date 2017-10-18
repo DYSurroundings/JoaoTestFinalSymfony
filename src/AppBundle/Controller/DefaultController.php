@@ -23,4 +23,30 @@ class DefaultController extends Controller
             "sections"=>$rub
         ]);
     }
+
+    /**
+     * @Route("/section/{id}", name="sections")
+     */
+    public function sectionAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $rub = $em->getRepository('AppBundle:Section')->findAll();
+        $titlesection = $em->getRepository('AppBundle:Section')->find($id);
+        $repository = $em->getRepository('AppBundle:Article');
+
+                $news = $repository->createQueryBuilder('a')
+                     ->innerJoin('a.section', 'g')
+                     ->where('g.id = :idactu')
+                     ->setParameter('idactu', $id)
+                     ->getQuery()->getResult();
+        dump($news);
+
+        // replace this example code with whatever you need
+        return $this->render('default/section.html.twig', [
+            "sectiontitle" => $titlesection,
+            "thenews"=>$news,
+            "sections"=>$rub
+        ]);
+    }
 }
