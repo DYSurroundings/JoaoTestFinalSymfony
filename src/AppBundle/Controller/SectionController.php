@@ -65,72 +65,14 @@ class SectionController extends Controller
      */
     public function showAction(Section $section)
     {
-        $deleteForm = $this->createDeleteForm($section);
 
         return $this->render('section/show.html.twig', array(
             'section' => $section,
-            'delete_form' => $deleteForm->createView(),
         ));
     }
 
-    /**
-     * Displays a form to edit an existing section entity.
-     *
-     * @Route("/{id}/edit", name="admin_section_edit")
-     * @Method({"GET", "POST"})
-     */
-    public function editAction(Request $request, Section $section)
-    {
-        $deleteForm = $this->createDeleteForm($section);
-        $editForm = $this->createForm('AppBundle\Form\SectionType', $section);
-        $editForm->handleRequest($request);
+    
 
-        if ($editForm->isSubmitted() && $editForm->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('admin_section_edit', array('id' => $section->getId()));
-        }
-
-        return $this->render('section/edit.html.twig', array(
-            'section' => $section,
-            'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        ));
-    }
-
-    /**
-     * Deletes a section entity.
-     *
-     * @Route("/{id}", name="admin_section_delete")
-     * @Method("DELETE")
-     */
-    public function deleteAction(Request $request, Section $section)
-    {
-        $form = $this->createDeleteForm($section);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($section);
-            $em->flush();
-        }
-
-        return $this->redirectToRoute('admin_section_index');
-    }
-
-    /**
-     * Creates a form to delete a section entity.
-     *
-     * @param Section $section The section entity
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createDeleteForm(Section $section)
-    {
-        return $this->createFormBuilder()
-            ->setAction($this->generateUrl('admin_section_delete', array('id' => $section->getId())))
-            ->setMethod('DELETE')
-            ->getForm()
-        ;
-    }
+   
 }

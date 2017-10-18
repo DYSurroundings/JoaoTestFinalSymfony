@@ -26,33 +26,37 @@
             <li class="nav-item active">
                 <a class="nav-link" href="{{ path("homepage") }}">Accueil <span class="sr-only">(current)</span></a>
             </li>
+
             {# SI on est connectés (n'importe quel rôle)#}
             {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                 <li class="nav-item">
                     <a class="nav-link" href="{{ path("fos_user_profile_show") }}">Espace Perso</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path("admin_article_index") }}">Admin Article</a>
+                </li>
+
+
                 {# SI on est admin#}
                 {% if is_granted('ROLE_ADMIN') %}
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ path("admin_news_index") }}">Admin News</a>
+                        <a class="nav-link" href="{{ path("admin_section_index") }}">Admin Section</a>
                     </li>
                 {% endif %}
-                {# SI on est SUPER admin#}
-                {% if is_granted('ROLE_SUPER_ADMIN') %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path("admin_fos_user_index") }}">Admin Users</a>
-                    </li>
-                {% endif %}
+
+                
                 <li class="nav-item">
                     <a class="nav-link" href="{{ path("fos_user_security_logout") }}">Déconnexion</a>
                 </li>
+
+
                 {# on est pas connecté #}
             {% else %}
                 <li class="nav-item">
                     <a class="nav-link" href="{{ path("fos_user_security_login") }}">Connexion</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ path("fos_user_registration_register") }}">Enregistrement</a>
+                    <a class="nav-link" href="{{ path("fos_user_registration_register") }}">Inscription</a>
                 </li>
             {% endif %}
         </ul>
