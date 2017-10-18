@@ -158,6 +158,11 @@ class FosUser
         return $this->usernameCanonical;
     }
 
+    public function __toString()
+    {
+        return $this->username;
+
+    }
     /**
      * Set email
      *
