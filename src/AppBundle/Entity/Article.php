@@ -74,6 +74,7 @@ class Article
     public function __construct()
     {
         $this->section = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->thedate = new \DateTime();
     }
 
 
