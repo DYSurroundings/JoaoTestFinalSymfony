@@ -13,7 +13,7 @@ class SectionType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('thetitle')->add('article');
+        $builder->add('thetitle');
     }
     
     /**
