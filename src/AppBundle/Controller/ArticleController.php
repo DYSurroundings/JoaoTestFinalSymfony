@@ -81,6 +81,20 @@ class ArticleController extends Controller
      */
     public function editAction(Request $request, Article $article)
     {
+
+        $idUser = $this->getUser()->getId();
+                $idArticleOwner = $article->getFosUser()->getId();
+
+                if (!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN'))
+                {
+                        if ($idArticleOwner != $idUser)
+                        {
+                            $this->addFlash("error", "Impossible de modifier un article qui ne vous appartient pas!");
+                            return $this->redirectToRoute('admin_article_index');
+            }
+
+         }
+
         $deleteForm = $this->createDeleteForm($article);
         $editForm = $this->createForm('AppBundle\Form\ArticleType', $article);
         $editForm->handleRequest($request);
