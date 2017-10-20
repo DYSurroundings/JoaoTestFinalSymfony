@@ -136,6 +136,18 @@ class ArticleController extends Controller
      */
     public function deleteAction(Request $request, Article $article)
     {
+        
+        $idUser = $this->getUser()->getId();
+        $idArticleOwner = $article->getFosUser()->getId();
+
+        if (!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
+            if ($idArticleOwner != $idUser) {
+                $this->addFlash("error", "Impossible de suprimer un article qui ne vous appartient pas!");
+                return $this->redirectToRoute('admin_article_index');
+            }
+
+        }
+
         $form = $this->createDeleteForm($article);
         $form->handleRequest($request);
 
