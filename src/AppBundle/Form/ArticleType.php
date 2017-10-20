@@ -14,7 +14,7 @@ class ArticleType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('thetitle')->add('thetext')->add('thedate')->add('fosUser')->add('section', EntityType::class, ['class' => 'AppBundle:Section', 'multiple' => true, 'expanded' => true]);
+        $builder->add('thetitle')->add('thetext')->add('thedate')->add('fosUser', EntityType::class,['class' => 'AppBundle:FosUser'])->add('section', EntityType::class,['class' => 'AppBundle:Section', 'multiple' => true,'expanded' => true]);
     }
 
     /**

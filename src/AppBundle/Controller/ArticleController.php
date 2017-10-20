@@ -39,12 +39,21 @@ class ArticleController extends Controller
      */
     public function newAction(Request $request)
     {
+
         $article = new Article();
         $form = $this->createForm('AppBundle\Form\ArticleType', $article);
+
+        if (!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN'))
+        {
+                $form = $this->createForm('AppBundle\Form\ArticleUserType', $article);
+        }
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
             $em = $this->getDoctrine()->getManager();
+            if (!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')){
+               $util = $em->getRepository('AppBundle:FosUser')->find($this->getUser()->getId());             $article->setFosUser($util);}
             $em->persist($article);
             $em->flush();
 
@@ -83,35 +92,26 @@ class ArticleController extends Controller
     {
 
         $idUser = $this->getUser()->getId();
-                $idArticleOwner = $article->getFosUser()->getId();
-
-                if (!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN'))
-                {
-                        if ($idArticleOwner != $idUser)
-                        {
-                            $this->addFlash("error", "Impossible de modifier un article qui ne vous appartient pas!");
-                            return $this->redirectToRoute('admin_article_index');
-            }
-
-         }
-
-        $deleteForm = $this->createDeleteForm($article);
-
-
-        $editForm = $this->createForm('AppBundle\Form\ArticleType', $article);
-
-        $idUser = $this->getUser()->getId();
         $idArticleOwner = $article->getFosUser()->getId();
 
-        if (!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN'))
-        {
-            if ($idArticleOwner = $idUser)
-            {
-                $editForm = $this->createForm('AppBundle\Form\ArticleUserType', $article);
+        if (!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
+            if ($idArticleOwner != $idUser) {
+                $this->addFlash("error", "Impossible de modifier un article qui ne vous appartient pas!");
+                return $this->redirectToRoute('admin_article_index');
             }
 
         }
 
+        $deleteForm = $this->createDeleteForm($article);
+
+        if (!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN')) {
+            $editForm = $this->createForm('AppBundle\Form\ArticleUserType', $article);
+
+        } else
+
+            $editForm = $this->createForm('AppBundle\Form\ArticleType', $article);
+
+    
 
         $editForm->handleRequest($request);
 
