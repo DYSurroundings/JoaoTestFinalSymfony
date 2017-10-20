@@ -96,7 +96,23 @@ class ArticleController extends Controller
          }
 
         $deleteForm = $this->createDeleteForm($article);
+
+
         $editForm = $this->createForm('AppBundle\Form\ArticleType', $article);
+
+        $idUser = $this->getUser()->getId();
+        $idArticleOwner = $article->getFosUser()->getId();
+
+        if (!$this->get('security.authorization_checker')->isGranted('ROLE_ADMIN'))
+        {
+            if ($idArticleOwner = $idUser)
+            {
+                $editForm = $this->createForm('AppBundle\Form\ArticleUserType', $article);
+            }
+
+        }
+
+
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
