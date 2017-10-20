@@ -1,9 +1,11 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Articles list</h1>
+<div class="container">
 
-    <table>
+<h1>Articles list</h1>
+    <div class="table-responsive">
+    <table class="table table-hover table-bordered">
         <thead>
             <tr>
                 <th>Id</th>
@@ -24,7 +26,7 @@
         {% for article in articles %}
             <tr>
                 <td><a href="{{ path('admin_article_show', { 'id': article.id }) }}">{{ article.id }}</a></td>
-                <td>{{ article.thetitle }}</td>
+                <td id="hehe">{{ article.thetitle }}</td>
                 <td>{{ article.thetext }}</td>
                 <td>{% if article.thedate %}{{ article.thedate|date('Y-m-d H:i:s') }}{% endif %}</td>
                 <td>
@@ -47,4 +49,6 @@
             <a href="{{ path('admin_article_new') }}">Create a new article</a>
         </li>
     </ul>
+    </div>
+</div>
 {% endblock %}
